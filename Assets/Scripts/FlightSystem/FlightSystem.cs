@@ -49,6 +49,7 @@ public class FlightSystem : MonoBehaviour
 	public float Mess = 30;
 	public bool DirectVelocity = true;// if true this riggidbody will not receive effect by other force.
 	public float DampingVelocity = 5;
+
 	void Start ()
 	{
 		// define all component

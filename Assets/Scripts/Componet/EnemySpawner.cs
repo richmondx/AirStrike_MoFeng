@@ -9,6 +9,7 @@ public class EnemySpawner : MonoBehaviour
 	
 	public bool Enabled = true;
 	public GameObject[] Objectman; // object to spawn
+    public GameObject Fighter;
 	public float timeSpawn = 3;
 	public int enemyCount = 10;
 	public int radius = 10;
@@ -34,8 +35,12 @@ public class EnemySpawner : MonoBehaviour
 		if (gos.Length < enemyCount && Time.time > timetemp + timeSpawn) {
 			// spawing an enemys by random index of Objectman[]
 			timetemp = Time.time;
-			GameObject obj = (GameObject)GameObject.Instantiate (Objectman [indexSpawn], transform.position + new Vector3 (Random.Range (-radius, radius), 0, Random.Range (-radius, radius)), Quaternion.identity);
+            if (Fighter == null) Fighter = this.gameObject;
+			GameObject obj = (GameObject)GameObject.Instantiate (Objectman [indexSpawn],
+                transform.position + new Vector3 (Random.Range (-radius, radius), 0, Random.Range (-radius, radius)), 
+                Quaternion.identity);
 			obj.tag = Tag;
+
 			indexSpawn = Random.Range (0, Objectman.Length);
 		}
 	}

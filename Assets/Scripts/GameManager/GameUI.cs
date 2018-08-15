@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameUI : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class GameUI : MonoBehaviour
 	private GameManager game;
 	private PlayerController play;
 	private WeaponController weapon;
+    private PlayerDate playDate;
 
     public Button btnPause;
     public Button btnRestartAndResume;
@@ -20,6 +22,9 @@ public class GameUI : MonoBehaviour
     public Text textScore;
     public Text textHP;
     public Text textWeaponAmmo;
+    public Text textArmorLv;
+    public Text textWeaponLv;
+
     public Slider sliderHP;
     public GameObject planePause;
     public GameObject planeGaming;
@@ -28,12 +33,10 @@ public class GameUI : MonoBehaviour
 	{
 		game = (GameManager)GameObject.FindObjectOfType (typeof(GameManager));
 		play = (PlayerController)GameObject.FindObjectOfType (typeof(PlayerController));
-		weapon = play.GetComponent<WeaponController> ();
+        playDate = (PlayerDate)GameObject.FindObjectOfType(typeof(PlayerDate));
+
+        weapon = play.GetComponent<WeaponController> ();
         // define player
-
-        if (isUgui) {
-
-        }
 		
 	}
     /*    
@@ -44,9 +47,14 @@ public class GameUI : MonoBehaviour
         async_operation.allowSceneActivation = false;
         yield return async_operation;
     }*/
+    void ShowUGUI() {
+        planeGaming.SetActive(true);
+        planePause.SetActive(false);
+    }
     private void Update()
     {
         if (isUgui) {
+            ShowUGUI();
             switch (Mode)
             {
                 case 0:
@@ -60,11 +68,11 @@ public class GameUI : MonoBehaviour
                         //开始游戏
                         play.Active = true;
                         //显示战斗UI
-                        planeGaming.SetActive(true);
-                        planePause.SetActive(false);
+                        ShowUGUI();
                         //更新数据
                         textKills.text = "击杀敌人：" + game.Killed.ToString();
                         textScore.text = "获得分数：" + game.Score.ToString();
+
                         float hp = play.GetComponent<DamageManager>().HP / play.GetComponent<DamageManager>().HPmax;
                         sliderHP.value = hp;
                         textHP.text = hp * 100 + "%";
@@ -86,13 +94,14 @@ public class GameUI : MonoBehaviour
                         play.Active = false;
                     MouseLock.MouseLocked = false;
                     //显示死亡UI
-                    planeGaming.SetActive(false);
-                    planePause.SetActive(true);
+                    ShowPauseUI();
                     //改变文字
                     btnRestartAndResume.GetComponentInChildren<Text>().text = "重新开始";
                     btnRestartAndResume.onClick.AddListener(delegate ()
                     {
-                        Application.LoadLevel(Application.loadedLevelName);
+                        //Application.LoadLevel(Application.loadedLevelName);
+                        SceneManager.LoadScene(Application.loadedLevelName);
+
                     });
 
                     break;
@@ -100,9 +109,9 @@ public class GameUI : MonoBehaviour
                     if (play)
                         play.Active = false;
                     MouseLock.MouseLocked = false;
+                    Time.timeScale = 0;
                     //显示死亡UI
-                    planeGaming.SetActive(false);
-                    planePause.SetActive(true);
+                    ShowPauseUI();
                     //改变文字
                     btnRestartAndResume.GetComponentInChildren<Text>().text = "回到游戏";
                     btnRestartAndResume.onClick.AddListener(delegate ()
@@ -121,17 +130,45 @@ public class GameUI : MonoBehaviour
             Mode = 0;
             Time.timeScale = 1;
         }
-        Application.LoadLevel("MainMenu");
+        //Application.LoadLevel("MainMenu");
+        SceneManager.LoadScene("MainMenu");
     }
 
     public void OnPauseClick() {
         Mode = 2;
     }
 
+    public void OnUpWeaponClick() {
+        if (playDate.LevelWeapon < playDate.LevelWeaponMax)
+        {
+            playDate.WeaponLvUp();
+            ShowPauseUI();
+        }
+    }
+    public void OnUpArmorClick() {
+        if (playDate.LevelHp < playDate.LevelHpMax)
+        {
+            playDate.HpLvUp();
+            ShowPauseUI();
+        }
+    }
+    /// <summary>
+    /// 显示死亡或者暂停UI界面
+    /// </summary>
+    void ShowPauseUI() {
+        planeGaming.SetActive(false);
+        planePause.SetActive(true);
+
+        textWeaponLv.text = "武器等级Lv" + playDate.LevelWeapon;
+        textArmorLv.text = "护甲等级Lv" + playDate.LevelHp;
+    }
+
+    #region GUI部分
     public void OnGUI ()
 	{
         if (!isUgui) {
-
+            planeGaming.SetActive(false);
+            planePause.SetActive(false);
             if (skin)
                 GUI.skin = skin;
 
@@ -213,7 +250,6 @@ public class GameUI : MonoBehaviour
                 case 2:
                     if (play)
                         play.Active = false;
-
                     MouseLock.MouseLocked = false;
                     Time.timeScale = 0;
                     GUI.skin.label.alignment = TextAnchor.MiddleCenter;
@@ -239,4 +275,5 @@ public class GameUI : MonoBehaviour
 		
 		
 	}
+    #endregion
 }

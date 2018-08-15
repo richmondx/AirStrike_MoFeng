@@ -1083,12 +1083,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 896ffe01a5f3e834e998db2dd667786c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skin: {fileID: 0}
   Logo: {fileID: 2800000, guid: 42b83d84354a1c44983b46bc6dc17618, type: 3}
   planeMainMenu: {fileID: 490582427}
   planeShopping: {fileID: 1017810500}
   planeAD: {fileID: 2014736675}
   planeChangeAir: {fileID: 1390594520}
   planePOPUp: {fileID: 651688247}
+  isUGUI: 0
+  OpenPop: 1
   textPOP: {fileID: 1073705215}
   textBuy: {fileID: 1332690590}
   btnBGBuy: {fileID: 1507927752}

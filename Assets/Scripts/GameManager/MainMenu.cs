@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 public class MainMenu : MonoBehaviour {
 
-	//public GUISkin skin;
+	public GUISkin skin;
 	public Texture2D Logo;
 
     public GameObject planeMainMenu;
@@ -12,10 +12,16 @@ public class MainMenu : MonoBehaviour {
     public GameObject planeAD;
     public GameObject planeChangeAir;
     public GameObject planePOPUp;
+    public bool isUGUI = true;
+    public bool OpenPop = true;
 
 	void Start () {
-        OnBackToMainClick();
-        ShowPOP();
+        if (isUGUI)
+        {
+            OnBackToMainClick();
+            if(OpenPop) ShowPOP();
+        }
+
     }
 	
 	void Update () {
@@ -78,21 +84,21 @@ public class MainMenu : MonoBehaviour {
     public Button btnBGBuy;
     public GameObject btnX;
     public string[] strPOP = { "", "", "" };
-    int TextNum = 1;
+    int POPTextNum = 1;
 
     public void OnNextBtnClick() {
-        if (TextNum <= 2)
+        if (POPTextNum <= strPOP.Length - 1)
         {
-            textPOP.text = strPOP[TextNum];
-            if (TextNum == 2)
+            textPOP.text = strPOP[POPTextNum];
+            if (POPTextNum == strPOP.Length - 1)
             {
                 textBuy.text = "观看广告";
                 btnX.SetActive(true);
                 btnBGBuy.onClick.AddListener(OnBuyClick);
             }
-            TextNum++;
+            POPTextNum++;
         }
-        else if (TextNum > 2) {
+        else if (POPTextNum > strPOP.Length - 1) {
             OnBuyClick();
         }
     }
@@ -108,26 +114,32 @@ public class MainMenu : MonoBehaviour {
     }
     #endregion
 
-    /*
+    
 	public void OnGUI(){
-		if(skin)
-		GUI.skin = skin;
-		
-		GUI.DrawTexture(new Rect(Screen.width/2 - Logo.width/2 , Screen.height/2 - 150,Logo.width,Logo.height),Logo);
-		
-		if(GUI.Button(new Rect(Screen.width/2 - 150,Screen.height/2 + 50,300,40),"Classic")){
-			Application.LoadLevel("Classic");
-		}
-		if(GUI.Button(new Rect(Screen.width/2 - 150,Screen.height/2 + 100,300,40),"Modern")){
+        if (!isUGUI)
+        {
+            if (skin)
+                GUI.skin = skin;
 
-            SceneManager.LoadScene("Modern");
-            //Application.LoadLevel("Modern");
-		}
-		if(GUI.Button(new Rect(Screen.width/2 - 150,Screen.height/2 + 150,300,40),"Invasion")){
-			Application.LoadLevel("Invasion");
-		}
-		
-		GUI.skin.label.alignment = TextAnchor.MiddleCenter;
-		GUI.Label(new Rect(0,Screen.height-90,Screen.width,50),"Air strike starter kit. by Rachan Neamprasert\n www.hardworkerstudio.com");
-	}*/
+            GUI.DrawTexture(new Rect(Screen.width / 2 - Logo.width / 2, Screen.height / 2 - 150, Logo.width, Logo.height), Logo);
+
+            if (GUI.Button(new Rect(Screen.width / 2 - 150, Screen.height / 2 + 50, 300, 40), "Classic"))
+            {
+                Application.LoadLevel("Classic");
+            }
+            if (GUI.Button(new Rect(Screen.width / 2 - 150, Screen.height / 2 + 100, 300, 40), "Modern"))
+            {
+
+                SceneManager.LoadScene("Modern");
+                //Application.LoadLevel("Modern");
+            }
+            if (GUI.Button(new Rect(Screen.width / 2 - 150, Screen.height / 2 + 150, 300, 40), "Invasion"))
+            {
+                Application.LoadLevel("Invasion");
+            }
+
+            GUI.skin.label.alignment = TextAnchor.MiddleCenter;
+            GUI.Label(new Rect(0, Screen.height - 90, Screen.width, 50), "Air strike starter kit. by Rachan Neamprasert\n www.hardworkerstudio.com");
+        }
+    }
 }

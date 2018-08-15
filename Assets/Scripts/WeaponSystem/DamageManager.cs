@@ -8,17 +8,24 @@ public class DamageManager : MonoBehaviour
 {
     public AudioClip[] HitSound;
     public GameObject Effect;
-    public int HP = 100;
-	public int HPmax { get; private set ; }
-	public ParticleSystem OnFireParticle;
-	
+
+    public float HP;
+    public float HPmax;    
+
+    public ParticleSystem OnFireParticle;
+    public PlayerDate playDate;
+
     private void Start()
     {
-		HPmax = HP;
+        playDate = (PlayerDate)GameObject.FindObjectOfType(typeof(PlayerDate));
+        if (playDate == null)    HPmax = 100;
+        else { HPmax = 100 * playDate.LevelHp; }        
+        HP = HPmax;
 		if(OnFireParticle){
 			OnFireParticle.Stop();
 		}
     }
+
 	// Damage function
     public void ApplyDamage(DamagePackage dm)
     {
