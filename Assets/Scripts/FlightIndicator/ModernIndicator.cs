@@ -28,7 +28,10 @@ public class ModernIndicator : Indicator
 				break;
 			case NavMode.Cockpit:
 				if (Crosshair_in)
-					GUI.DrawTexture (new Rect ((Screen.width / 2 - Crosshair_in.width / 2) + CrosshairOffset.x, (Screen.height / 2 - Crosshair_in.height / 2) + CrosshairOffset.y, Crosshair_in.width, Crosshair_in.height), Crosshair_in);	
+					GUI.DrawTexture (new Rect ((Screen.width / 2 - Crosshair_in.width / 2) + CrosshairOffset.x, 
+                        (Screen.height / 2 - Crosshair_in.height / 2) + CrosshairOffset.y, 
+                        Crosshair_in.width, Crosshair_in.height), 
+                        Crosshair_in);	
 				DrawNavEnemy ();
 				
 				Matrix4x4 matrixBackup = GUI.matrix;
