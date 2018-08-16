@@ -7,7 +7,7 @@ public class GameManager : MonoBehaviour {
     public int Score { get; private set; }
     public int GetGold { get; private set; }
 
-    public bool isOpenAD = true;
+    public bool isOpenAD = false;
     public bool isUGUI = true;
 
     public int MultipleGoldKills = 3;

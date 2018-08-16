@@ -45,8 +45,7 @@ public class AddGameDifficulty : MonoBehaviour {
             timeD = 0;
         }
 
-        if (timeP >= game.timePOPShow) {
-            if (!game.isOpenAD) return;
+        if (timeP >= game.timePOPShow) {            
             ShowPop();
             timeP = 0;
         }
@@ -67,8 +66,8 @@ public class AddGameDifficulty : MonoBehaviour {
         
     }
     void ShowPop() {
-        Debug.Log("弹出AD: " + timeP + "---" + timeF);
-        
+        if (!game.isOpenAD) return;
+        Debug.Log("弹出AD: " + timeP + "---" + timeF);        
         gameUI.ShowPop();
     }
     void EndGame() {

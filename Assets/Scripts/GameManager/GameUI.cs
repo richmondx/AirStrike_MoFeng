@@ -73,8 +73,8 @@ public class GameUI : MonoBehaviour
                         //显示战斗UI
                         ShowUGUI();
                         //更新数据
-                        textKills.text = "击杀敌人：" + game.Killed.ToString();
-                        textScore.text = "获得分数：" + game.Score.ToString();
+                        textKills.text = game.Killed.ToString();
+                        textScore.text = game.Score.ToString();
 
                         float hp = play.GetComponent<DamageManager>().HP / play.GetComponent<DamageManager>().HPmax;
                         sliderHP.value = hp;
