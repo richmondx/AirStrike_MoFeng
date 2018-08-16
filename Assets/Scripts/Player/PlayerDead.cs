@@ -9,8 +9,8 @@ public class PlayerDead : FlightOnDead
 	public override void OnDead (GameObject killer)
 	{
 		// if player dead call GameOver in GameManager
-		GameManager gamemanger = (GameManager)GameObject.FindObjectOfType (typeof(GameManager));
-		gamemanger.GameOver ();
+		GameManager game = (GameManager)GameObject.FindObjectOfType (typeof(GameManager));
+		game.GameOver ();
 		base.OnDead (killer);
 	}
 }

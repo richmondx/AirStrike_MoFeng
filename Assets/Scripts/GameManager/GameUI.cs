@@ -25,7 +25,10 @@ public class GameUI : MonoBehaviour
     public Text textArmorLv;
     public Text textWeaponLv;
     public Text textGold;
+    public Text textPauseScore;
     public Slider sliderHP;
+    public GameObject Toast;
+    public Text toastText;
     public GameObject planePause;
     public GameObject planeGaming;
 
@@ -93,6 +96,7 @@ public class GameUI : MonoBehaviour
                     if (play)
                         play.Active = false;
                     MouseLock.MouseLocked = false;
+
                     //显示死亡UI
                     ShowPauseUI();
                     //改变文字
@@ -103,6 +107,9 @@ public class GameUI : MonoBehaviour
                         SceneManager.LoadScene(Application.loadedLevelName);
 
                     });
+                    textPauseScore.text = "击杀敌人："+ game.Killed + "\n"
+                        + "积分：" + game.Score + "\n"
+                        + "获得金币：" + game.GetGold;
 
                     break;
                 case 2://暂停
@@ -119,6 +126,7 @@ public class GameUI : MonoBehaviour
                         Mode = 0;
                         Time.timeScale = 1;
                     });
+                    textPauseScore.text = " ";
                     break;
             }
         }
@@ -138,19 +146,26 @@ public class GameUI : MonoBehaviour
         Mode = 2;
     }
 
-    public void OnUpWeaponClick() {
-        if (playDate.LevelWeapon < playDate.LevelWeaponMax)
-        {
+    public void OnUpWeaponClick() {        
             playDate.WeaponLvUp();
             ShowPauseUI();
-        }
+       
     }
-    public void OnUpArmorClick() {
-        if (playDate.LevelHp < playDate.LevelHpMax)
-        {
+    public void OnUpArmorClick() {     
             playDate.HpLvUp();
-            ShowPauseUI();
-        }
+            ShowPauseUI();      
+    }
+    public void ShowLvIsMax() {
+        Toast.SetActive(true);
+        toastText.text = "等级已经满了";
+    }
+    public void ShowGoldNotEnough()
+    {
+        Toast.SetActive(true);
+        toastText.text = "金币不足";
+    }
+    public void OnToastOkClick() {
+        Toast.SetActive(false);
     }
     /// <summary>
     /// 显示死亡或者暂停UI界面
@@ -159,8 +174,8 @@ public class GameUI : MonoBehaviour
         planeGaming.SetActive(false);
         planePause.SetActive(true);
         textGold.text = "金币： " + playDate.Gold;
-        textWeaponLv.text = "武器等级Lv" + playDate.LevelWeapon;
-        textArmorLv.text = "护甲等级Lv" + playDate.LevelHp;
+        textWeaponLv.text = "武器等级Lv" + playDate.LvWeapon;
+        textArmorLv.text = "护甲等级Lv" + playDate.LvHp;
 
     }
 

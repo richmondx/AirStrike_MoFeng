@@ -9,6 +9,7 @@ TagManager:
   - Particle
   - Enemy
   - Airport
+  - UI
   layers:
   - Default
   - TransparentFX

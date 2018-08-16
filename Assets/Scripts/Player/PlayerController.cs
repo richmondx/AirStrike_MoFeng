@@ -22,7 +22,7 @@ public class PlayerController : MonoBehaviour
 	private bool directVelBack;
 	public GUISkin skin;
 	public bool ShowHowto;
-    public GameUI gameUI;
+    private GameUI gameUI;
 	void Start ()
 	{
 		flight = this.GetComponent<FlightSystem> ();
