@@ -28,8 +28,7 @@ public class EnemySpawner : MonoBehaviour
 	{
 		
 		if (!Enabled)
-			return;
-		
+			return;	
 		
 		var gos = GameObject.FindGameObjectsWithTag (Tag);
 		if (gos.Length < enemyCount && Time.time > timetemp + timeSpawn) {
@@ -37,7 +36,7 @@ public class EnemySpawner : MonoBehaviour
 			timetemp = Time.time;
             if (Fighter == null) Fighter = this.gameObject;
 			GameObject obj = (GameObject)GameObject.Instantiate (Objectman [indexSpawn],
-                transform.position + new Vector3 (Random.Range (-radius, radius), 0, Random.Range (-radius, radius)), 
+                Fighter.transform.position + new Vector3 (Random.Range (-radius, radius), 0, Random.Range (-radius, radius)), 
                 Quaternion.identity);
 			obj.tag = Tag;
 
