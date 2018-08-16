@@ -25,7 +25,7 @@ public class FlightSystem : MonoBehaviour
 	private float MoveSpeed = 10;// normal move speed
 	
 	[HideInInspector]
-	public bool SimpleControl = false;// set true is enabled casual controling
+	public bool SimpleControl = true;// set true is enabled casual controling
 	[HideInInspector]
 	public bool FollowTarget = false;
 	[HideInInspector]

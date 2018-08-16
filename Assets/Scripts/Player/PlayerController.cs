@@ -22,20 +22,21 @@ public class PlayerController : MonoBehaviour
 	private bool directVelBack;
 	public GUISkin skin;
 	public bool ShowHowto;
-
+    public GameUI gameUI;
 	void Start ()
 	{
 		flight = this.GetComponent<FlightSystem> ();
 		View = (FlightView)GameObject.FindObjectOfType (typeof(FlightView));
-		
-		
-		// setting all Touch screen controller in the position
-		controllerTouch = new TouchScreenVal (new Rect (0, 0, Screen.width / 2, Screen.height - 100));
+        gameUI = (GameUI)GameObject.FindObjectOfType(typeof(GameUI));
+
+        // setting all Touch screen controller in the position
+        controllerTouch = new TouchScreenVal (new Rect (0, 0, Screen.width / 2, Screen.height - 100));
 		fireTouch = new TouchScreenVal (new Rect (Screen.width / 2, 0, Screen.width / 2, Screen.height));
 		switchTouch = new TouchScreenVal (new Rect (0, Screen.height - 100, Screen.width / 2, 100));
 		sliceTouch = new TouchScreenVal (new Rect (0, 0, Screen.width / 2, 50));
-		
-		if (flight)
+
+        View.SwitchCameras();
+        if (flight)
 			directVelBack = flight.DirectVelocity;
 	}
 	
@@ -129,6 +130,8 @@ public class PlayerController : MonoBehaviour
 	// you can remove this part..
 	void OnGUI ()
 	{
+        if (gameUI.isUgui) return;
+
 		if (!ShowHowto)
 			return;
 		

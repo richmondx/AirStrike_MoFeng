@@ -9,9 +9,16 @@ public class ModernIndicator : Indicator
 
 	public Texture2D HlineTexture;
 	public Texture2D HlineStepTexture;
-	
-	void OnGUI ()
+    private GameUI gameUI;
+    private PlayerController play;
+    private void Start()
+    {
+        gameUI = (GameUI)GameObject.FindObjectOfType(typeof(GameUI));
+        play = (PlayerController)GameObject.FindObjectOfType(typeof(PlayerController));
+    }
+    void OnGUI ()
 	{
+        if (!play.Active) return;
 
 		if (Show) {
 			GUI.color = Color.green;

@@ -24,7 +24,7 @@ public class GameUI : MonoBehaviour
     public Text textWeaponAmmo;
     public Text textArmorLv;
     public Text textWeaponLv;
-
+    public Text textGold;
     public Slider sliderHP;
     public GameObject planePause;
     public GameObject planeGaming;
@@ -158,9 +158,10 @@ public class GameUI : MonoBehaviour
     void ShowPauseUI() {
         planeGaming.SetActive(false);
         planePause.SetActive(true);
-
+        textGold.text = "金币： " + playDate.Gold;
         textWeaponLv.text = "武器等级Lv" + playDate.LevelWeapon;
         textArmorLv.text = "护甲等级Lv" + playDate.LevelHp;
+
     }
 
     #region GUI部分
