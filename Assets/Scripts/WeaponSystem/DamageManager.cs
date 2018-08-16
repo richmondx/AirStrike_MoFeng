@@ -10,7 +10,7 @@ public class DamageManager : MonoBehaviour
     public GameObject Effect;
 
     public float HP;
-    public float HPmax;    
+    public float HPmax = 100;    
 
     public ParticleSystem OnFireParticle;
     private PlayerDate playDate;
@@ -19,13 +19,17 @@ public class DamageManager : MonoBehaviour
     {
         playDate = (PlayerDate)GameObject.FindObjectOfType(typeof(PlayerDate));
         if (playDate == null)    HPmax = 100;
-        else { HPmax = 100 * playDate.LvHp; }        
+        else { HPmax = 100; }        
         HP = HPmax;
+
 		if(OnFireParticle){
 			OnFireParticle.Stop();
 		}
     }
-
+    public void UpdateHp() {
+        HPmax = playDate.LvHp * 100;
+        HP = HPmax;
+    }
 	// Damage function
     public void ApplyDamage(DamagePackage dm)
     {

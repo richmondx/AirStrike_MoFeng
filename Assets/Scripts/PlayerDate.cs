@@ -2,11 +2,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerDate : MonoBehaviour {  
+public class PlayerDate : MonoBehaviour {
+    private static PlayerDate instance;
+    public static PlayerDate Instance
+    {
+        get
+        {
+            if (instance == null)
+                instance = (PlayerDate)GameObject.FindObjectOfType(typeof(PlayerDate));
+            return instance;
+        }
+        set { }
+    }
 
     public int LvWeapon { get;private set; }
     public int LvHp { get; private set; }
     public int Gold { get; private set; }
+
     private GameManager game;
     private GameUI gameUI;
     private void Start()

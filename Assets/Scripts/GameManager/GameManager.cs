@@ -3,26 +3,32 @@ using System.Collections;
 
 public class GameManager : MonoBehaviour {
 	// basic game score
-	public int Killed = 0;
-    public int Score = 0;
-    public int GetGold = 0;
+	public int Killed { get; private set; }
+    public int Score { get; private set; }
+    public int GetGold { get; private set; }
+
     public bool isOpenAD = true;
     public bool isUGUI = true;
-    public int AirScore = 250;
+
     public int MultipleGoldKills = 3;
     public float MultipleGoldLv = .2f;
     public int MultipleScoreKills = 3;
     public float MultipleScoreLv = .37f;
 
-
+    public int DifLvMax = 3;
     public int BasisScoreMax = 25;
     public int BasisGoldMax = 20;
     public int UpSkillLvMax = 50;
+
+    public float timePOPShow = 5;
+    public float timeAddDif = 20;
+    public float timeEndGame = 120;
 
     private PlayerDate playDate;
     void Start () {
 		Killed = 0;
         Score = 0;
+        GetGold = 0;
         playDate = (PlayerDate)GameObject.FindObjectOfType(typeof(PlayerDate));
 
     }
@@ -40,11 +46,11 @@ public class GameManager : MonoBehaviour {
     }
 
     public int CountScoreAdd() {
-        return BasisScoreMax + (int)(1 + playDate.LvWeapon * MultipleScoreLv);
+        return BasisScoreMax + (int)(1 + PlayerDate.Instance.LvWeapon * MultipleScoreLv);
     }
     public int CountGold() {
         return (Random.Range(1, BasisGoldMax) + Killed * MultipleGoldKills) *
-            (int)(1 + playDate.LvWeapon * MultipleGoldLv);
+            (int)(1 + PlayerDate.Instance.LvWeapon * MultipleGoldLv);
     }
     public void CountRanking() {
 

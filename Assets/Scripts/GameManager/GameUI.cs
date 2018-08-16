@@ -13,7 +13,6 @@ public class GameUI : MonoBehaviour
 	private GameManager game;
 	private PlayerController play;
 	private WeaponController weapon;
-    private PlayerDate playDate;
 
     public Button btnPause;
     public Button btnRestartAndResume;
@@ -31,17 +30,18 @@ public class GameUI : MonoBehaviour
     public Text toastText;
     public GameObject planePause;
     public GameObject planeGaming;
+    public GameObject planePop;
 
     void Start ()
 	{
 		game = (GameManager)GameObject.FindObjectOfType (typeof(GameManager));
-		play = (PlayerController)GameObject.FindObjectOfType (typeof(PlayerController));
-        playDate = (PlayerDate)GameObject.FindObjectOfType(typeof(PlayerDate));
+		play = (PlayerController)GameObject.FindObjectOfType (typeof(PlayerController));        
 
         weapon = play.GetComponent<WeaponController> ();
         // define player
-		
-	}
+        if(isUgui) ShowUGUI();
+
+    }
     /*    
     //异步加载场景
     IEnumerator LoadScene(string scene_name)
@@ -53,11 +53,11 @@ public class GameUI : MonoBehaviour
     void ShowUGUI() {
         planeGaming.SetActive(true);
         planePause.SetActive(false);
+        planePop.SetActive(false);
     }
     private void Update()
     {
-        if (isUgui) {
-            ShowUGUI();
+        if (isUgui) {            
             switch (Mode)
             {
                 case 0:
@@ -128,10 +128,45 @@ public class GameUI : MonoBehaviour
                     });
                     textPauseScore.text = " ";
                     break;
+                case 3://AD
+                    if (play)
+                        play.Active = false;
+                    MouseLock.MouseLocked = false;
+                    Time.timeScale = 0;
+                    planePop.SetActive(true);
+                    break;
             }
         }
     }
-  
+    #region ADUI部分
+    public void OnClosePop() {
+        Debug.Log("This is Close");
+        Mode = 0;
+        Time.timeScale = 1;
+        planePop.SetActive(false);
+    }
+    public void ShowPop() {
+        Mode = 3;        
+    }
+    public void OnADClick() {
+        Debug.Log("This is AD");
+    }
+    #endregion
+
+    #region PauseUI部分
+    /// <summary>
+    /// 显示死亡或者暂停UI界面
+    /// </summary>
+    void ShowPauseUI()
+    {
+        planeGaming.SetActive(false);
+        planePause.SetActive(true);
+        textGold.text = "金币： " + PlayerDate.Instance.Gold.ToString();
+        textWeaponLv.text = "武器等级Lv" + PlayerDate.Instance.LvWeapon.ToString();
+        textArmorLv.text = "护甲等级Lv" + PlayerDate.Instance.LvHp.ToString();
+
+    }
+
     public void OnBackToMainMenuClick() {
 
         if (Mode == 2) {
@@ -147,12 +182,12 @@ public class GameUI : MonoBehaviour
     }
 
     public void OnUpWeaponClick() {        
-            playDate.WeaponLvUp();
+            PlayerDate.Instance.WeaponLvUp();
             ShowPauseUI();
        
     }
-    public void OnUpArmorClick() {     
-            playDate.HpLvUp();
+    public void OnUpArmorClick() {
+            PlayerDate.Instance.HpLvUp();
             ShowPauseUI();      
     }
     public void ShowLvIsMax() {
@@ -167,17 +202,9 @@ public class GameUI : MonoBehaviour
     public void OnToastOkClick() {
         Toast.SetActive(false);
     }
-    /// <summary>
-    /// 显示死亡或者暂停UI界面
-    /// </summary>
-    void ShowPauseUI() {
-        planeGaming.SetActive(false);
-        planePause.SetActive(true);
-        textGold.text = "金币： " + playDate.Gold;
-        textWeaponLv.text = "武器等级Lv" + playDate.LvWeapon;
-        textArmorLv.text = "护甲等级Lv" + playDate.LvHp;
+    #endregion
 
-    }
+
 
     #region GUI部分
     public void OnGUI ()
