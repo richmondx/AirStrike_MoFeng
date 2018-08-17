@@ -19,14 +19,10 @@ public class PlayerDate : MonoBehaviour {
     public int LvWeapon { get;private set; }
     public int LvHp { get; private set; }
     public int Gold;
-
-    private GameManager game;
-    private GameUI gameUI;
+    
     private void Start()
     {
         InitDate();
-        game = (GameManager)GameObject.FindObjectOfType(typeof(GameManager));
-        gameUI = (GameUI)GameObject.FindObjectOfType(typeof(GameUI));
     }
 
     void InitDate() {
@@ -46,27 +42,35 @@ public class PlayerDate : MonoBehaviour {
             return true;
         }
     }
+    public bool LvIsMaxHp() {
+        if (LvHp < GameManager.Instance.HpLvMax) return false;
+        else return true;
 
-    public void WeaponLvUp() {
-        if (LvWeapon >= game.UpSkillLvMax) {
-            gameUI.ShowLvIsMax();
-            return;
+    }
+    public bool LvIsMaxAtk()
+    {
+        if (LvWeapon < GameManager.Instance.AtkLvMax) return false;
+        else return true;
+    }
+    public bool WeaponLvUp() {
+
+        if (PayGold(GameManager.Instance.GetUpAtkPay())) {
+            LvWeapon++;
+            return true;
         }
-        if (PayGold(game.GetUpAtkPay(LvWeapon))) LvWeapon++;
         else {
-            gameUI.ShowGoldNotEnough();
+            return false;
         }
     }
 
-    public void HpLvUp()
+    public bool HpLvUp()
     {
-        if (LvHp >= game.UpSkillLvMax) {
-            gameUI.ShowLvIsMax();
-            return;
+        if (PayGold(GameManager.Instance.GetUpHpPay())) { 
+            LvHp++;
+            return true;
         }
-        if (PayGold(game.GetUpHpPay(LvHp))) LvHp++;
         else{
-            gameUI.ShowGoldNotEnough();
+            return false;
         }
     }
 }

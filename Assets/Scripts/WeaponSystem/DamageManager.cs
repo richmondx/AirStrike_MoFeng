@@ -13,23 +13,25 @@ public class DamageManager : MonoBehaviour
     public float HPmax = 100;    
 
     public ParticleSystem OnFireParticle;
-    private PlayerDate playDate;
 
     private void Start()
     {
-        playDate = (PlayerDate)GameObject.FindObjectOfType(typeof(PlayerDate));
-        if (playDate == null)    HPmax = 100;
-        else { HPmax = 100; }        
+        if (GetComponent<AIController>() == null)
+            HPmax = PlayerDate.Instance.LvHp * 100;
+        else HPmax = 100;
+
         HP = HPmax;
 
 		if(OnFireParticle){
 			OnFireParticle.Stop();
 		}
     }
+
     public void UpdateHp() {
-        HPmax = playDate.LvHp * 100;
+        HPmax = PlayerDate.Instance.LvHp * 100;
         HP = HPmax;
     }
+
 	// Damage function
     public void ApplyDamage(DamagePackage dm)
     {

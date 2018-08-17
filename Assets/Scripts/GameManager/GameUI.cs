@@ -11,7 +11,6 @@ public class GameUI : MonoBehaviour
 	public Texture2D Logo;
 	public int Mode;
     public bool isUgui = false;
-	private GameManager game;
 	private PlayerController play;
 	private WeaponController weapon;
 
@@ -42,6 +41,7 @@ public class GameUI : MonoBehaviour
     public Button BtnAtk;
     public Button BtnChangeWeapon;
     public Text textAmmoNum;
+
     public GameObject planePause;
     public GameObject planeDeath;
     public GameObject planeGaming;
@@ -49,11 +49,12 @@ public class GameUI : MonoBehaviour
 
     void Start ()
 	{
-		game = (GameManager)GameObject.FindObjectOfType (typeof(GameManager));
+
 		play = (PlayerController)GameObject.FindObjectOfType (typeof(PlayerController));
         weapon = play.GetComponent<WeaponController> ();
+        GameManager.Instance.ClearDate();
         // define player
-        if(isUgui) ShowUGUI();
+        if (isUgui) ShowUGUI();
 
     }
     /*    
@@ -90,12 +91,12 @@ public class GameUI : MonoBehaviour
                         //显示战斗UI
                         //ShowUGUI();
                         //更新数据
-                        textKills.text = game.Killed.ToString();
-                        textScore.text = game.Score.ToString();
+                        textKills.text = GameManager.Instance.Killed.ToString();
+                        textScore.text = GameManager.Instance.Score.ToString();
 
                         float hp = play.GetComponent<DamageManager>().HP / play.GetComponent<DamageManager>().HPmax;
                         sliderHP.value = hp;
-                        textHP.text = hp * 100 + "%";
+                        textHP.text = play.GetComponent<DamageManager>().HP+"/"+ play.GetComponent<DamageManager>().HPmax;
 
                         UpdateAmmo();
                     }
@@ -168,16 +169,16 @@ public class GameUI : MonoBehaviour
     {
         planeDeath.SetActive(true);
 
-        textGetGold.text = game.GetGold.ToString();
-        textDeathKills.text = game.Killed.ToString();
-        textDeathScore.text = game.Score.ToString();
-        textDefectNum.text = game.Ranking.ToString();
+        textGetGold.text = GameManager.Instance.GetGold.ToString();
+        textDeathKills.text = GameManager.Instance.Killed.ToString();
+        textDeathScore.text = GameManager.Instance.Score.ToString();
+        textDefectNum.text = GameManager.Instance.Ranking.ToString();
         textGoldNum.text = PlayerDate.Instance.Gold.ToString();
 
         textWeaponLv.text = PlayerDate.Instance.LvWeapon.ToString();
         textArmorLv.text = PlayerDate.Instance.LvHp.ToString();
-        textUpHpPay.text = game.GetUpHpPay(PlayerDate.Instance.LvHp).ToString();
-        textUpAtkPay.text = game.GetUpAtkPay(PlayerDate.Instance.LvWeapon).ToString();    
+        textUpHpPay.text = GameManager.Instance.GetUpHpPay().ToString();
+        textUpAtkPay.text = GameManager.Instance.GetUpAtkPay().ToString();    
 
     } 
 
@@ -204,13 +205,34 @@ public class GameUI : MonoBehaviour
                 break;
         }
     }
-    public void OnUpWeaponClick() {        
-            PlayerDate.Instance.WeaponLvUp();
-            ShowDeathUI();       
+    public void OnUpWeaponClick() {
+        if (PlayerDate.Instance.LvIsMaxAtk()) {
+            ShowLvIsMax();
+            return;
+        }
+        if (PlayerDate.Instance.WeaponLvUp())
+        {
+            ShowDeathUI();
+        }
+        else
+        {
+            ShowGoldNotEnough();
+        }
     }
     public void OnUpArmorClick() {
-            PlayerDate.Instance.HpLvUp();
-            ShowDeathUI();      
+        if (PlayerDate.Instance.LvIsMaxHp())
+        {
+            ShowLvIsMax();
+            return;
+        }
+        if (PlayerDate.Instance.HpLvUp())
+        {
+            ShowDeathUI();
+        }
+        else {
+            ShowGoldNotEnough();
+        }
+               
     }
     public void ShowLvIsMax() {
         Toast.SetActive(true);
@@ -279,8 +301,8 @@ public class GameUI : MonoBehaviour
 
                         GUI.skin.label.alignment = TextAnchor.UpperLeft;
                         GUI.skin.label.fontSize = 30;
-                        GUI.Label(new Rect(20, 20, 200, 50), "Kills " + game.Killed.ToString());
-                        GUI.Label(new Rect(20, 60, 200, 50), "Score " + game.Score.ToString());
+                        GUI.Label(new Rect(20, 20, 200, 50), "Kills " + GameManager.Instance.Killed.ToString());
+                        GUI.Label(new Rect(20, 60, 200, 50), "Score " + GameManager.Instance.Score.ToString());
                                                 
                         GUI.skin.label.alignment = TextAnchor.UpperRight;
                         GUI.Label(new Rect(Screen.width - 220, 20, 200, 50), "ARMOR " + play.GetComponent<DamageManager>().HP);

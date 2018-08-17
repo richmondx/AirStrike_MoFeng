@@ -9,17 +9,23 @@ public class MainMenu : MonoBehaviour {
 
     public GameObject planeMainMenu;
     public GameObject planeShopping;
+    public GameObject planeShopToast;
     public GameObject planeAD;
     public GameObject planeChangeAir;
     public GameObject planePOPUp;
-    public bool isUGUI = true;
-    public bool OpenPop = true;
+
+    public Text textShopGoldNum;
+    public Text textShopAtkLv;
+    public Text textShopHpLv;
+    public Text textShopUpAtkGold;
+    public Text textShopUpHpGold;    
 
 	void Start () {
-        if (isUGUI)
+
+        if (GameManager.Instance.isUGUI)
         {
             OnBackToMainClick();
-            if(OpenPop) ShowPOP();
+            if(GameManager.Instance.isOpenAD) ShowPOP();
         }
 
     }
@@ -42,6 +48,7 @@ public class MainMenu : MonoBehaviour {
     }
     public void OnShoppingClick() {
         planeMainMenu.SetActive(false);
+        ShowShop();
         planeShopping.SetActive(true);
     }
     public void OnShowADClick() {
@@ -71,6 +78,64 @@ public class MainMenu : MonoBehaviour {
     public void OnBuyGoldClick() {
 
     }
+    public void OnToastClose() {
+        planeShopToast.SetActive(false);
+    }
+
+    public void OnUpWeaponClick()
+    {
+        if (PlayerDate.Instance.LvIsMaxAtk())
+        {
+            ShowLvIsMax();
+            return;
+        }
+
+        if (PlayerDate.Instance.WeaponLvUp())
+        {
+            ShowShop();
+        }
+        else
+        {
+            ShowGoldNotEnough();
+        }
+    }
+    public void OnUpArmorClick()
+    {
+        if (PlayerDate.Instance.LvIsMaxHp())
+        {
+            ShowLvIsMax();
+            return;
+        }
+        if (PlayerDate.Instance.HpLvUp())
+        {
+            ShowShop();
+        }
+        else
+        {
+            ShowGoldNotEnough();
+        }
+
+    }
+
+    public void ShowLvIsMax()
+    {
+        planeShopToast.SetActive(true);
+        planeShopToast.GetComponentInChildren<Text>().text = "等级已经满了";
+    }
+    public void ShowGoldNotEnough()
+    {
+        planeShopToast.SetActive(true);
+        planeShopToast.GetComponentInChildren<Text>().text = "金币不足";
+    }
+    public void ShowShop() {
+
+        textShopGoldNum.text = PlayerDate.Instance.Gold.ToString();
+        textShopAtkLv.text = PlayerDate.Instance.LvWeapon.ToString();
+        textShopHpLv.text = PlayerDate.Instance.LvHp.ToString();
+        textShopUpAtkGold.text = GameManager.Instance.GetUpAtkPay().ToString();
+        textShopUpHpGold.text = GameManager.Instance.GetUpHpPay().ToString();
+    }
+
 
     #endregion
 
@@ -116,7 +181,7 @@ public class MainMenu : MonoBehaviour {
 
     
 	public void OnGUI(){
-        if (!isUGUI)
+        if (!GameManager.Instance.isUGUI)
         {
             if (skin)
                 GUI.skin = skin;

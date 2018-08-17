@@ -2,11 +2,24 @@
 using System.Collections;
 
 public class GameManager : MonoBehaviour {
-	// basic game score
-	public int Killed { get; private set; }
-    public int Score { get; private set; }
-    public int GetGold { get; private set; }
-    public int Ranking { get; set; }
+
+    private static GameManager instance;
+    public static GameManager Instance
+    {
+        get
+        {
+            if (instance == null)
+                instance = (GameManager)GameObject.FindObjectOfType(typeof(GameManager));
+            return instance;
+        }
+        set { }
+    }
+
+    // basic game score
+    public int Killed;
+    public int Score;
+    public int GetGold;
+    public int Ranking;
 
     public bool isOpenAD = false;
     public bool isUGUI = true;
@@ -35,12 +48,13 @@ public class GameManager : MonoBehaviour {
     public float timeAddDif = 20;
     public float timeEndGame = 120;
 
+    public int HpLvMax = 50;
+    public int AtkLvMax = 50;
     private PlayerDate playDate;
+
     void Start () {
-		Killed = 0;
-        Score = 0;
-        GetGold = 0;
-        playDate = (PlayerDate)GameObject.FindObjectOfType(typeof(PlayerDate));
+        ClearDate();
+        playDate = this.GetComponent<PlayerDate>();
 
     }
 	
@@ -48,6 +62,13 @@ public class GameManager : MonoBehaviour {
 	void Update () {
 		
 	}
+
+    public void ClearDate() {
+        Killed = 0;
+        Score = 0;
+        GetGold = 0;
+    }
+
 	// add score function
 	public void AddKilled(){
         Score += CountScoreAdd();
@@ -56,11 +77,11 @@ public class GameManager : MonoBehaviour {
         Ranking = CountRanking();
 
     }
-    public int GetUpHpPay(int Lv) {
-        return BasisUpHp * (int)(Lv * MultipleUpHp);
+    public int GetUpHpPay() {
+        return BasisUpHp * (int)(playDate.LvHp* MultipleUpHp);
     }
-    public int GetUpAtkPay(int Lv) {
-        return BasisUpAtk * (int)(Lv * MultipleUpAtk);
+    public int GetUpAtkPay() {
+        return BasisUpAtk * (int)(playDate.LvWeapon * MultipleUpAtk);
     }
 
     public int CountScoreAdd() {
@@ -87,5 +108,5 @@ public class GameManager : MonoBehaviour {
         if (menu){
 			menu.Mode = 1;	
 		}
-	}
+    }
 }
