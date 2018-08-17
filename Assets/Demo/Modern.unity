@@ -455,12 +455,12 @@ MonoBehaviour:
   textKills: {fileID: 1193544061}
   textScore: {fileID: 1819912345}
   textHP: {fileID: 1368571070}
-  textAmmo:
-  - {fileID: 1516959461}
-  - {fileID: 829158394}
   sliderHP: {fileID: 1880859524}
   Toast: {fileID: 324349604}
   toastText: {fileID: 1917065370}
+  BtnAtk: {fileID: 2091897693}
+  BtnChangeWeapon: {fileID: 474038758}
+  textAmmoNum: {fileID: 932602636}
   planePause: {fileID: 18799394}
   planeDeath: {fileID: 2110852070}
   planeGaming: {fileID: 240782827}
@@ -494,7 +494,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 240782828}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
@@ -4345,7 +4345,6 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 403060185}
   - {fileID: 2091897692}
   - {fileID: 474038757}
   - {fileID: 67238012}
@@ -4524,7 +4523,7 @@ RectTransform:
   m_Children:
   - {fileID: 5355225}
   m_Father: {fileID: 240782828}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
@@ -4653,7 +4652,8 @@ MonoBehaviour:
   TorqueSpeedAxis: {x: 0, y: 0, z: 0}
   TorqueObject: {fileID: 0}
   OnActive: 0
-  Icon: {fileID: 2800000, guid: e18057e118afb4b94851c60d0c62c12a, type: 3}
+  Icon: {fileID: 21300000, guid: 314601323c98d2e49a176fde7033efa1, type: 3}
+  _Icon: {fileID: 0}
   MissileOuter:
   - {fileID: 201200669}
   - {fileID: 2015709087}
@@ -5107,117 +5107,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 362855651}
   m_Mesh: {fileID: 4300006, guid: 41fadbebf94826d4f9678e6c8f18ca53, type: 3}
---- !u!1 &403060184
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 403060185}
-  - component: {fileID: 403060188}
-  - component: {fileID: 403060187}
-  - component: {fileID: 403060186}
-  m_Layer: 5
-  m_Name: btnRocket
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &403060185
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 403060184}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 1516959460}
-  m_Father: {fileID: 240782828}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 0}
-  m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -285, y: 130}
-  m_SizeDelta: {x: 171, y: 171}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &403060186
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 403060184}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1392445389, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Navigation:
-    m_Mode: 3
-    m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
-    m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 0}
-  m_Transition: 2
-  m_Colors:
-    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
-    m_ColorMultiplier: 1
-    m_FadeDuration: 0.1
-  m_SpriteState:
-    m_HighlightedSprite: {fileID: 0}
-    m_PressedSprite: {fileID: 21300000, guid: da19988899631b0498d227ec9d7f1496, type: 3}
-    m_DisabledSprite: {fileID: 0}
-  m_AnimationTriggers:
-    m_NormalTrigger: Normal
-    m_HighlightedTrigger: Highlighted
-    m_PressedTrigger: Pressed
-    m_DisabledTrigger: Disabled
-  m_Interactable: 1
-  m_TargetGraphic: {fileID: 403060187}
-  m_OnClick:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
-      Culture=neutral, PublicKeyToken=null
---- !u!114 &403060187
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 403060184}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 0105bed0e555708428579e2e822e77e9, type: 3}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
---- !u!222 &403060188
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 403060184}
 --- !u!1 &407032243
 GameObject:
   m_ObjectHideFlags: 0
@@ -5492,6 +5381,7 @@ MonoBehaviour:
   TorqueObject: {fileID: 0}
   OnActive: 0
   Icon: {fileID: 2800000, guid: ec3235b133f67bd489c2674fafb78d30, type: 3}
+  _Icon: {fileID: 0}
   MissileOuter: []
   Missile: {fileID: 100000, guid: 6e1fdbd5f097da043be28e9b1fe9da46, type: 2}
   FireRate: 0.1
@@ -5538,7 +5428,7 @@ GameObject:
   - component: {fileID: 474038759}
   - component: {fileID: 474038758}
   m_Layer: 5
-  m_Name: btnRocketA2
+  m_Name: btnChangeWeapon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5556,7 +5446,7 @@ RectTransform:
   m_Children:
   - {fileID: 829158393}
   m_Father: {fileID: 240782828}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
@@ -5602,8 +5492,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1116137373}
-        m_MethodName: SwitchWeapon
+      - m_Target: {fileID: 47944667}
+        m_MethodName: OnChangeWeapon
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6981,7 +6871,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &829158393
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7611,7 +7501,7 @@ GameObject:
   - component: {fileID: 932602637}
   - component: {fileID: 932602636}
   m_Layer: 5
-  m_Name: MiniGUn
+  m_Name: Ammo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7632,8 +7522,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 103}
-  m_SizeDelta: {x: 0, y: -104}
+  m_AnchoredPosition: {x: 0, y: 110.9}
+  m_SizeDelta: {x: 29.7, y: -120.3}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &932602636
 MonoBehaviour:
@@ -7658,7 +7548,7 @@ MonoBehaviour:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     m_FontSize: 50
     m_FontStyle: 0
-    m_BestFit: 0
+    m_BestFit: 1
     m_MinSize: 0
     m_MaxSize: 70
     m_Alignment: 4
@@ -9344,7 +9234,8 @@ MonoBehaviour:
   TorqueSpeedAxis: {x: 0, y: 0, z: 0}
   TorqueObject: {fileID: 0}
   OnActive: 0
-  Icon: {fileID: 2800000, guid: f59a71266c50c114cb4176496be85e5d, type: 3}
+  Icon: {fileID: 21300000, guid: da19988899631b0498d227ec9d7f1496, type: 3}
+  _Icon: {fileID: 0}
   MissileOuter:
   - {fileID: 866880685}
   - {fileID: 350696658}
@@ -9592,6 +9483,10 @@ MonoBehaviour:
   MultipleUpAtk: 1.08
   BasisUpHp: 5
   BasisUpAtk: 7
+  BasisRanking: 1000
+  MultipleRankKill: 100
+  MultipleRankLv: 50
+  MultipleRankRandomLv: 10
   timePOPShow: 25
   timeAddDif: 20
   timeEndGame: 120
@@ -9606,7 +9501,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4afc796bfebbaa47a9b4a8695ce9a44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  UpLvPayGold: 100
+  Gold: 0
 --- !u!1 &1462342400
 GameObject:
   m_ObjectHideFlags: 0
@@ -9851,7 +9746,8 @@ MonoBehaviour:
   TorqueSpeedAxis: {x: 0, y: 0, z: 0}
   TorqueObject: {fileID: 0}
   OnActive: 0
-  Icon: {fileID: 2800000, guid: 6b38ee86dcd082548a236b6afdffc7a2, type: 3}
+  Icon: {fileID: 21300000, guid: b97293d45466e5046970328c86134038, type: 3}
+  _Icon: {fileID: 0}
   MissileOuter: []
   Missile: {fileID: 100000, guid: 50cd6b4c96f60604db1b0412c4cdc9ca, type: 2}
   FireRate: 0.03
@@ -10035,80 +9931,6 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1500148732}
---- !u!1 &1516959459
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 1516959460}
-  - component: {fileID: 1516959462}
-  - component: {fileID: 1516959461}
-  m_Layer: 5
-  m_Name: Rocket
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &1516959460
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1516959459}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 403060185}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -103.1}
-  m_SizeDelta: {x: 0, y: -136}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1516959461
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1516959459}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
-  m_RaycastTarget: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 30
-    m_FontStyle: 0
-    m_BestFit: 1
-    m_MinSize: 3
-    m_MaxSize: 40
-    m_Alignment: 4
-    m_AlignByGeometry: 0
-    m_RichText: 1
-    m_HorizontalOverflow: 0
-    m_VerticalOverflow: 0
-    m_LineSpacing: 1
-  m_Text: 10/10
---- !u!222 &1516959462
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1516959459}
 --- !u!1 &1559482158
 GameObject:
   m_ObjectHideFlags: 0
@@ -10511,7 +10333,7 @@ RectTransform:
   - {fileID: 1193544060}
   - {fileID: 1819912344}
   m_Father: {fileID: 240782828}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
@@ -11071,7 +10893,7 @@ RectTransform:
   - {fileID: 1945053435}
   - {fileID: 1368571069}
   m_Father: {fileID: 240782828}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
@@ -12168,7 +11990,7 @@ GameObject:
   - component: {fileID: 2091897694}
   - component: {fileID: 2091897693}
   m_Layer: 5
-  m_Name: btnMiniGun
+  m_Name: btnShot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12186,11 +12008,11 @@ RectTransform:
   m_Children:
   - {fileID: 932602635}
   m_Father: {fileID: 240782828}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -320, y: 320}
+  m_AnchoredPosition: {x: -321, y: 132}
   m_SizeDelta: {x: 171, y: 171}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2091897693
@@ -12233,7 +12055,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1116137373}
-        m_MethodName: SwitchWeapon
+        m_MethodName: LaunchWeapon
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

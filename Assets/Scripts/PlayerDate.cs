@@ -18,8 +18,8 @@ public class PlayerDate : MonoBehaviour {
 
     public int LvWeapon { get;private set; }
     public int LvHp { get; private set; }
-    public int Gold { get; private set; }
-    public int UpLvPayGold = 100;
+    public int Gold;
+
     private GameManager game;
     private GameUI gameUI;
     private void Start()
@@ -52,7 +52,7 @@ public class PlayerDate : MonoBehaviour {
             gameUI.ShowLvIsMax();
             return;
         }
-        if (PayGold(100)) LvWeapon++;
+        if (PayGold(game.GetUpAtkPay(LvWeapon))) LvWeapon++;
         else {
             gameUI.ShowGoldNotEnough();
         }
@@ -64,7 +64,7 @@ public class PlayerDate : MonoBehaviour {
             gameUI.ShowLvIsMax();
             return;
         }
-        if (PayGold(100)) LvHp++;
+        if (PayGold(game.GetUpHpPay(LvHp))) LvHp++;
         else{
             gameUI.ShowGoldNotEnough();
         }

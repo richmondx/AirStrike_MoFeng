@@ -35,11 +35,13 @@ public class GameUI : MonoBehaviour
     public Text textKills;
     public Text textScore;
     public Text textHP;     
-    public Text[] textAmmo;
+
     public Slider sliderHP;
     public GameObject Toast;
     public Text toastText;
-
+    public Button BtnAtk;
+    public Button BtnChangeWeapon;
+    public Text textAmmoNum;
     public GameObject planePause;
     public GameObject planeDeath;
     public GameObject planeGaming;
@@ -48,8 +50,7 @@ public class GameUI : MonoBehaviour
     void Start ()
 	{
 		game = (GameManager)GameObject.FindObjectOfType (typeof(GameManager));
-		play = (PlayerController)GameObject.FindObjectOfType (typeof(PlayerController));        
-
+		play = (PlayerController)GameObject.FindObjectOfType (typeof(PlayerController));
         weapon = play.GetComponent<WeaponController> ();
         // define player
         if(isUgui) ShowUGUI();
@@ -225,36 +226,30 @@ public class GameUI : MonoBehaviour
     }
     #endregion
 
-    #region WeaponButton
-    public void OnMiniGunClick() {
-        weapon.LaunchWeapon(WeaponType.MiniGun);
-    }
-    public void OnRocketClick() {
-        weapon.LaunchWeapon(WeaponType.Rocket);
-    }
-    public void OnRocketA2Click() {
-        weapon.LaunchWeapon(WeaponType.RocketA2);
-    }
+    #region WeaponButton   
+    public void OnChangeWeapon()
+    {
+        weapon.SwitchWeapon();
+        if (weapon.WeaponLists[weapon.CurrentWeapon].Icon)
+            BtnAtk.image.sprite = weapon.WeaponLists[weapon.CurrentWeapon].Icon;
 
+    }
     public void UpdateAmmo() {
-        //int index = (int)type;
-        for (int index = 1; index < 3; index++) {
-            if (weapon.WeaponLists[index].Ammo <= 0 && weapon.WeaponLists[index].ReloadingProcess > 0)
-            {
-                if (!weapon.WeaponLists[index].InfinityAmmo)
-                {
-                    textAmmo[index - 1].text = "Reloading " + Mathf.Floor((1 - weapon.WeaponLists[index].ReloadingProcess) * 100) + "%";
-                }                
-            }
-            else
-            {
-                if (!weapon.WeaponLists[index].InfinityAmmo)
-                {
-                    textAmmo[index - 1].text = weapon.WeaponLists[index].Ammo.ToString();
-                }
-            }
+
+        if (weapon.CurrentWeapon == 0) {
+            textAmmoNum.text = "无限";
+            return;
         }
-        
+            
+        if (weapon.WeaponLists[weapon.CurrentWeapon].Ammo <= 0 && weapon.WeaponLists[weapon.CurrentWeapon].ReloadingProcess > 0)
+        {
+            textAmmoNum.text = "Reloading " + Mathf.Floor((1 - weapon.WeaponLists[weapon.CurrentWeapon].ReloadingProcess) * 100) + "%";
+        }
+        else
+        {
+            if (!weapon.WeaponLists[weapon.CurrentWeapon].InfinityAmmo)
+                textAmmoNum.text = weapon.WeaponLists[weapon.CurrentWeapon].Ammo.ToString();
+        }
     }
     #endregion
 
@@ -294,7 +289,7 @@ public class GameUI : MonoBehaviour
                         // Draw Weapon system
                         //if (weapon != null && weapon.WeaponLists.Length > 0 && weapon.WeaponLists.Length < weapon.CurrentWeapon && weapon.WeaponLists [weapon.CurrentWeapon] != null) {
                         if (weapon.WeaponLists[weapon.CurrentWeapon].Icon)
-                            GUI.DrawTexture(new Rect(Screen.width - 200, Screen.height - 200, 160, 160), weapon.WeaponLists[weapon.CurrentWeapon].Icon);
+                            GUI.DrawTexture(new Rect(Screen.width - 200, Screen.height - 200, 160, 160), weapon.WeaponLists[weapon.CurrentWeapon]._Icon);
 
                         GUI.skin.label.alignment = TextAnchor.UpperRight;
                         if (weapon.WeaponLists[weapon.CurrentWeapon].Ammo <= 0 && weapon.WeaponLists[weapon.CurrentWeapon].ReloadingProcess > 0)

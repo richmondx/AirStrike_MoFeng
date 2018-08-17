@@ -62,9 +62,11 @@ public class GameManager : MonoBehaviour {
     public int GetUpAtkPay(int Lv) {
         return BasisUpAtk * (int)(Lv * MultipleUpAtk);
     }
+
     public int CountScoreAdd() {
         return BasisScoreMax + (int)(1 + PlayerDate.Instance.LvWeapon * MultipleScoreLv);
     }
+
     private int CountGold() {
         return (Random.Range(1, BasisGoldMax) + Killed * MultipleGoldKills) *
             (int)(1 + PlayerDate.Instance.LvWeapon * MultipleGoldLv);

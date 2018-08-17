@@ -8,7 +8,8 @@ using Random = UnityEngine.Random;
 public class WeaponLauncher : WeaponBase
 {
 	public bool OnActive;
-	public Texture2D Icon;
+	public Sprite Icon;
+    public Texture _Icon;
 	public Transform[] MissileOuter;
 	public GameObject Missile;
 	public float FireRate = 0.1f;
