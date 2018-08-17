@@ -1,5 +1,10 @@
 using UnityEngine;
 using System.Collections;
+public enum WeaponType {
+    MiniGun,
+    Rocket,
+    RocketA2
+}
 
 public class WeaponController : MonoBehaviour
 {
@@ -51,15 +56,24 @@ public class WeaponController : MonoBehaviour
 	
 	}
 	
-	public void LaunchWeapon (int index)
+	public void LaunchWeapon (WeaponType type)
 	{
+        int index = (int)type;
 		CurrentWeapon = index;
 		if (CurrentWeapon < WeaponLists.Length && WeaponLists [index] != null) {
 			WeaponLists [index].Shoot ();
 		}
 	}
-	
-	public void SwitchWeapon ()
+    public void LaunchWeapon(int index)
+    {
+        CurrentWeapon = index;
+        if (CurrentWeapon < WeaponLists.Length && WeaponLists[index] != null)
+        {
+            WeaponLists[index].Shoot();
+        }
+    }
+
+    public void SwitchWeapon ()
 	{
 		CurrentWeapon += 1;
 		if (CurrentWeapon >= WeaponLists.Length) {
@@ -73,4 +87,5 @@ public class WeaponController : MonoBehaviour
 			WeaponLists [CurrentWeapon].Shoot ();
 		}
 	}
+
 }

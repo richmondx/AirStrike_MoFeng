@@ -2,6 +2,7 @@
 using System.Collections;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System;
 
 public class GameUI : MonoBehaviour
 {
@@ -17,18 +18,30 @@ public class GameUI : MonoBehaviour
     public Button btnPause;
     public Button btnRestartAndResume;
     public Button btnMainMenu;
-    public Text textKills;
-    public Text textScore;
-    public Text textHP;
-    public Text textWeaponAmmo;
+
+    //死亡界面
+    public Text textDeathKills;
+    public Text textDeathScore;
+    public Text textGetGold;
+
     public Text textArmorLv;
     public Text textWeaponLv;
-    public Text textGold;
-    public Text textPauseScore;
+    public Text textUpHpPay;
+    public Text textUpAtkPay;
+    public Text textDefectNum;
+    public Text textGoldNum;
+
+    //战斗界面
+    public Text textKills;
+    public Text textScore;
+    public Text textHP;     
+    public Text[] textAmmo;
     public Slider sliderHP;
     public GameObject Toast;
     public Text toastText;
+
     public GameObject planePause;
+    public GameObject planeDeath;
     public GameObject planeGaming;
     public GameObject planePop;
 
@@ -52,8 +65,11 @@ public class GameUI : MonoBehaviour
     }*/
     void ShowUGUI() {
         planeGaming.SetActive(true);
+
+        planePause.SetActive(false);
         planePause.SetActive(false);
         planePop.SetActive(false);
+        planeDeath.SetActive(false);
     }
     private void Update()
     {
@@ -63,7 +79,7 @@ public class GameUI : MonoBehaviour
                 case 0:
                     if (Input.GetKeyDown(KeyCode.Escape))
                     {
-                        Mode = 2;
+                        OnPauseClick();
                     }
 
                     if (play)
@@ -71,7 +87,7 @@ public class GameUI : MonoBehaviour
                         //开始游戏
                         play.Active = true;
                         //显示战斗UI
-                        ShowUGUI();
+                        //ShowUGUI();
                         //更新数据
                         textKills.text = game.Killed.ToString();
                         textScore.text = game.Score.ToString();
@@ -80,64 +96,42 @@ public class GameUI : MonoBehaviour
                         sliderHP.value = hp;
                         textHP.text = hp * 100 + "%";
 
-                        if (weapon.WeaponLists[weapon.CurrentWeapon].Ammo <= 0 && weapon.WeaponLists[weapon.CurrentWeapon].ReloadingProcess > 0)
-                        {
-                            if (!weapon.WeaponLists[weapon.CurrentWeapon].InfinityAmmo)
-                                textWeaponAmmo.text= "Reloading " + Mathf.Floor((1 - weapon.WeaponLists[weapon.CurrentWeapon].ReloadingProcess) * 100) + "%";
-                        }
-                        else
-                        {
-                            if (!weapon.WeaponLists[weapon.CurrentWeapon].InfinityAmmo)
-                                textWeaponAmmo.text = weapon.WeaponLists[weapon.CurrentWeapon].Ammo.ToString();
-                        }
+                        UpdateAmmo();
                     }
                     break;
+
                 case 1://玩家死亡
                     if (play)
                         play.Active = false;
                     MouseLock.MouseLocked = false;
-
+                    planeGaming.SetActive(false);
                     //显示死亡UI
-                    ShowPauseUI();
-                    //改变文字
-                    btnRestartAndResume.GetComponentInChildren<Text>().text = "重新开始";
-                    btnRestartAndResume.onClick.AddListener(delegate ()
-                    {
-                        //Application.LoadLevel(Application.loadedLevelName);
-                        SceneManager.LoadScene(Application.loadedLevelName);
-
-                    });
-                    textPauseScore.text = "击杀敌人："+ game.Killed + "\n"
-                        + "积分：" + game.Score + "\n"
-                        + "获得金币：" + game.GetGold;
-
+                    ShowDeathUI();
                     break;
+
                 case 2://暂停
                     if (play)
                         play.Active = false;
                     MouseLock.MouseLocked = false;
                     Time.timeScale = 0;
-                    //显示死亡UI
+
+                    planeGaming.SetActive(false);
+                    //显示暂停UI
                     ShowPauseUI();
-                    //改变文字
-                    btnRestartAndResume.GetComponentInChildren<Text>().text = "回到游戏";
-                    btnRestartAndResume.onClick.AddListener(delegate ()
-                    {
-                        Mode = 0;
-                        Time.timeScale = 1;
-                    });
-                    textPauseScore.text = " ";
                     break;
                 case 3://AD
                     if (play)
                         play.Active = false;
                     MouseLock.MouseLocked = false;
                     Time.timeScale = 0;
+                    planeGaming.SetActive(false);
                     planePop.SetActive(true);
                     break;
             }
         }
     }
+
+
     #region ADUI部分
     public void OnClosePop() {
         Debug.Log("This is Close");
@@ -153,19 +147,38 @@ public class GameUI : MonoBehaviour
     }
     #endregion
 
-    #region PauseUI部分
-    /// <summary>
-    /// 显示死亡或者暂停UI界面
-    /// </summary>
-    void ShowPauseUI()
-    {
-        planeGaming.SetActive(false);
+    #region PuseUI部分
+    private void ShowPauseUI()
+    {        
         planePause.SetActive(true);
-        textGold.text = "金币： " + PlayerDate.Instance.Gold.ToString();
-        textWeaponLv.text = "武器等级Lv" + PlayerDate.Instance.LvWeapon.ToString();
-        textArmorLv.text = "护甲等级Lv" + PlayerDate.Instance.LvHp.ToString();
-
     }
+
+    public void OnPauseClick()
+    {
+        Mode = 2;
+    }
+    #endregion
+
+    #region DeathUI部分
+    /// <summary>
+    /// 显示死亡UI界面
+    /// </summary>
+    void ShowDeathUI()
+    {
+        planeDeath.SetActive(true);
+
+        textGetGold.text = game.GetGold.ToString();
+        textDeathKills.text = game.Killed.ToString();
+        textDeathScore.text = game.Score.ToString();
+        textDefectNum.text = game.Ranking.ToString();
+        textGoldNum.text = PlayerDate.Instance.Gold.ToString();
+
+        textWeaponLv.text = PlayerDate.Instance.LvWeapon.ToString();
+        textArmorLv.text = PlayerDate.Instance.LvHp.ToString();
+        textUpHpPay.text = game.GetUpHpPay(PlayerDate.Instance.LvHp).ToString();
+        textUpAtkPay.text = game.GetUpAtkPay(PlayerDate.Instance.LvWeapon).ToString();    
+
+    } 
 
     public void OnBackToMainMenuClick() {
 
@@ -177,18 +190,26 @@ public class GameUI : MonoBehaviour
         SceneManager.LoadScene("MainMenu");
     }
 
-    public void OnPauseClick() {
-        Mode = 2;
+    public void OnGameGoClick(int type) {
+        
+        switch (type) {
+            case 1:
+                SceneManager.LoadScene(Application.loadedLevelName);
+                break;
+            case 2:
+                Mode = 0;
+                Time.timeScale = 1;
+                ShowUGUI();
+                break;
+        }
     }
-
     public void OnUpWeaponClick() {        
             PlayerDate.Instance.WeaponLvUp();
-            ShowPauseUI();
-       
+            ShowDeathUI();       
     }
     public void OnUpArmorClick() {
             PlayerDate.Instance.HpLvUp();
-            ShowPauseUI();      
+            ShowDeathUI();      
     }
     public void ShowLvIsMax() {
         Toast.SetActive(true);
@@ -204,6 +225,38 @@ public class GameUI : MonoBehaviour
     }
     #endregion
 
+    #region WeaponButton
+    public void OnMiniGunClick() {
+        weapon.LaunchWeapon(WeaponType.MiniGun);
+    }
+    public void OnRocketClick() {
+        weapon.LaunchWeapon(WeaponType.Rocket);
+    }
+    public void OnRocketA2Click() {
+        weapon.LaunchWeapon(WeaponType.RocketA2);
+    }
+
+    public void UpdateAmmo() {
+        //int index = (int)type;
+        for (int index = 1; index < 3; index++) {
+            if (weapon.WeaponLists[index].Ammo <= 0 && weapon.WeaponLists[index].ReloadingProcess > 0)
+            {
+                if (!weapon.WeaponLists[index].InfinityAmmo)
+                {
+                    textAmmo[index - 1].text = "Reloading " + Mathf.Floor((1 - weapon.WeaponLists[index].ReloadingProcess) * 100) + "%";
+                }                
+            }
+            else
+            {
+                if (!weapon.WeaponLists[index].InfinityAmmo)
+                {
+                    textAmmo[index - 1].text = weapon.WeaponLists[index].Ammo.ToString();
+                }
+            }
+        }
+        
+    }
+    #endregion
 
 
     #region GUI部分

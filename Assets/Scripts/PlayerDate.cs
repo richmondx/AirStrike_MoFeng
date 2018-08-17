@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerDate : MonoBehaviour {
+
     private static PlayerDate instance;
     public static PlayerDate Instance
     {
@@ -18,7 +19,7 @@ public class PlayerDate : MonoBehaviour {
     public int LvWeapon { get;private set; }
     public int LvHp { get; private set; }
     public int Gold { get; private set; }
-
+    public int UpLvPayGold = 100;
     private GameManager game;
     private GameUI gameUI;
     private void Start()
