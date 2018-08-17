@@ -18,14 +18,17 @@ EditorBuildSettings:
     path: Assets/AirStrike/Demo/Invasion.unity
     guid: 00000000000000000000000000000000
   - enabled: 1
+    path: Assets/Demo/Init.unity
+    guid: 225ecd4e833e6014a8c533eefcc8745b
+  - enabled: 1
     path: Assets/Demo/Mainmenu.unity
     guid: 4712a06c1ba66ed4cadbaf3767bd7093
-  - enabled: 0
-    path: Assets/Demo/Sample.unity
-    guid: b1ad47c11dad747128811ac9875bfa27
   - enabled: 1
     path: Assets/Demo/Modern.unity
     guid: b6116cc361425d842b94c30d67d17709
+  - enabled: 0
+    path: Assets/Demo/Sample.unity
+    guid: b1ad47c11dad747128811ac9875bfa27
   - enabled: 0
     path: Assets/Demo/Invasion.unity
     guid: d3b187015f0814748994664ee33c29a7

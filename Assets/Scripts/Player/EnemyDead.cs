@@ -13,9 +13,11 @@ public class EnemyDead : FlightOnDead {
 		if(killer){// check if killer is exist
 			// check if PlayerManager are included.
 			if(killer.gameObject.GetComponent<PlayerManager>()){
-				// find gameMAnager and Add score
-				GameManager game = (GameManager)GameObject.FindObjectOfType(typeof(GameManager));
-				game.AddKilled();
+                // find gameMAnager and Add score
+                
+                FlightManager fligh = (FlightManager)GameObject.FindObjectOfType(typeof(FlightManager));
+                fligh.AddKilled();
+
 			}
 		}
 		base.OnDead (killer);

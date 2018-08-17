@@ -15,47 +15,31 @@ public class PlayerDate : MonoBehaviour {
         }
         set { }
     }
-
-    public int LvWeapon { get;private set; }
-    public int LvHp { get; private set; }
-    public int Gold;
     
-    private void Start()
-    {
-        InitDate();
-    }
-
-    void InitDate() {
-        LvWeapon = 1;
-        LvHp = 1;
-        Gold = 500;
-    }
-
-    public void AddGold(int num) {
-        Gold += num;
-    }
 
     public bool PayGold(int Num) {
-        if (Gold < Num) return false;
+        
+        if (JsonManager.playerData.basedata.Gold < Num) return false;
         else {
-            Gold -= Num;
+            JsonManager.playerData.basedata.Gold -= Num;
             return true;
         }
+        return true;
     }
     public bool LvIsMaxHp() {
-        if (LvHp < GameManager.Instance.HpLvMax) return false;
+        if (JsonManager.playerData.basedata.LvHp < GameManager.Instance.HpLvMax) return false;
         else return true;
 
     }
     public bool LvIsMaxAtk()
     {
-        if (LvWeapon < GameManager.Instance.AtkLvMax) return false;
+        if (JsonManager.playerData.basedata.LvWeapon < GameManager.Instance.AtkLvMax) return false;
         else return true;
     }
     public bool WeaponLvUp() {
 
         if (PayGold(GameManager.Instance.GetUpAtkPay())) {
-            LvWeapon++;
+            JsonManager.addLvWeapon(1);
             return true;
         }
         else {
@@ -65,8 +49,8 @@ public class PlayerDate : MonoBehaviour {
 
     public bool HpLvUp()
     {
-        if (PayGold(GameManager.Instance.GetUpHpPay())) { 
-            LvHp++;
+        if (PayGold(GameManager.Instance.GetUpHpPay())) {
+            JsonManager.addLvHp(1);
             return true;
         }
         else{

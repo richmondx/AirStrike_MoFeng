@@ -17,7 +17,7 @@ public class DamageManager : MonoBehaviour
     private void Start()
     {
         if (GetComponent<AIController>() == null)
-            HPmax = PlayerDate.Instance.LvHp * 100;
+            HPmax = GameManager.Instance.GetUpHp();
         else HPmax = 100;
 
         HP = HPmax;
@@ -28,7 +28,7 @@ public class DamageManager : MonoBehaviour
     }
 
     public void UpdateHp() {
-        HPmax = PlayerDate.Instance.LvHp * 100;
+        HPmax = JsonManager.playerData.basedata.LvHp * 100;
         HP = HPmax;
     }
 

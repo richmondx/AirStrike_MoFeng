@@ -6,14 +6,13 @@ using UnityEngine.SceneManagement;
 
 public class GameInit : MonoBehaviour {
 
-    public GameObject PlayerDate;
+    public GameObject gameManager;
     public Slider slider;
     private AsyncOperation async_operation;
     private int curProgressVaule = 0;//计数器
-
     // Use this for initialization
     void Start () {
-        DontDestroyOnLoad(PlayerDate);
+        DontDestroyOnLoad(gameManager);
         StartCoroutine(LoadScene("Mainmenu"));
     }
 

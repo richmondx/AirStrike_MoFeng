@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using System.Collections;
+//using System;
 
 public class GameManager : MonoBehaviour {
 
@@ -16,10 +16,6 @@ public class GameManager : MonoBehaviour {
     }
 
     // basic game score
-    public int Killed;
-    public int Score;
-    public int GetGold;
-    public int Ranking;
 
     public bool isOpenAD = false;
     public bool isUGUI = true;
@@ -48,65 +44,37 @@ public class GameManager : MonoBehaviour {
     public float timeAddDif = 20;
     public float timeEndGame = 120;
 
+
+    public int BasisHp = 100;
+    public int MultipleHp = 10;
     public int HpLvMax = 50;
     public int AtkLvMax = 50;
-    private PlayerDate playDate;
 
-    void Start () {
-        ClearDate();
-        playDate = this.GetComponent<PlayerDate>();
+    public float ToastTime = 1f;
+    
 
-    }
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
-
-    public void ClearDate() {
-        Killed = 0;
-        Score = 0;
-        GetGold = 0;
-    }
-
-	// add score function
-	public void AddKilled(){
-        Score += CountScoreAdd();
-		Killed +=1;
-        GetGold = CountGold();
-        Ranking = CountRanking();
-
-    }
     public int GetUpHpPay() {
-        return BasisUpHp * (int)(playDate.LvHp* MultipleUpHp);
+        return BasisUpHp * (int)(JsonManager.playerData.basedata.LvHp* MultipleUpHp);
     }
+
     public int GetUpAtkPay() {
-        return BasisUpAtk * (int)(playDate.LvWeapon * MultipleUpAtk);
+        return BasisUpAtk * (int)(JsonManager.playerData.basedata.LvWeapon * MultipleUpAtk);
     }
 
     public int CountScoreAdd() {
-        return BasisScoreMax + (int)(1 + PlayerDate.Instance.LvWeapon * MultipleScoreLv);
+        return BasisScoreMax + (int)(1 + JsonManager.playerData.basedata.LvWeapon * MultipleScoreLv);
     }
 
-    private int CountGold() {
-        return (Random.Range(1, BasisGoldMax) + Killed * MultipleGoldKills) *
-            (int)(1 + PlayerDate.Instance.LvWeapon * MultipleGoldLv);
-    }
+    public int GetUpHp() {
+        return 1*(BasisHp + (JsonManager.playerData.basedata.LvHp - 1) * MultipleHp);
+    }   
+
     
-    private int CountRanking() {
-        return 1*(1000 + (Killed * MultipleRankKill)+(PlayerDate.Instance.LvWeapon * MultipleRankLv)+ Random.Range(0,(MultipleRankRandomLv * PlayerDate.Instance.LvWeapon)));
-    }
-
     void OnGUI(){
 		//GUI.Label(new Rect(20,20,300,30),"Kills "+Score);
 	}
 
-	// game over fimction
-	public void GameOver(){
-		GameUI menu = (GameUI)GameObject.FindObjectOfType(typeof(GameUI));
-        playDate.AddGold(GetGold);
-        if (menu){
-			menu.Mode = 1;	
-		}
-    }
+
+
+
 }

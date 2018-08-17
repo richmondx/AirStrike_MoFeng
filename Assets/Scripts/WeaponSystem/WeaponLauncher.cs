@@ -9,7 +9,7 @@ public class WeaponLauncher : WeaponBase
 {
 	public bool OnActive;
 	public Sprite Icon;
-    public Texture _Icon;
+    public Texture TIcon;
 	public Transform[] MissileOuter;
 	public GameObject Missile;
 	public float FireRate = 0.1f;

@@ -31,8 +31,8 @@ public class MainMenu : MonoBehaviour {
     }
 	
 	void Update () {
-	
-	}
+
+    }
     void ShowPOP() {
         planePOPUp.SetActive(true);
         textPOP.text = strPOP[0];
@@ -75,8 +75,19 @@ public class MainMenu : MonoBehaviour {
     #endregion
 
     #region ShoppingUI
-    public void OnBuyGoldClick() {
-
+    public void OnBuyGoldClick(int Count) {
+        switch (Count) {
+            case 6:
+                JsonManager.addGold(800);
+                break;
+            case 10:
+                JsonManager.addGold(1800);
+                break;
+            case 20:
+                JsonManager.addGold(4000);
+                break;
+        }
+        ShowShop();
     }
     public void OnToastClose() {
         planeShopToast.SetActive(false);
@@ -128,10 +139,9 @@ public class MainMenu : MonoBehaviour {
         planeShopToast.GetComponentInChildren<Text>().text = "金币不足";
     }
     public void ShowShop() {
-
-        textShopGoldNum.text = PlayerDate.Instance.Gold.ToString();
-        textShopAtkLv.text = PlayerDate.Instance.LvWeapon.ToString();
-        textShopHpLv.text = PlayerDate.Instance.LvHp.ToString();
+        textShopGoldNum.text = JsonManager.playerData.basedata.Gold.ToString();
+        textShopAtkLv.text = "Lv"+ JsonManager.playerData.basedata.LvWeapon.ToString();
+        textShopHpLv.text = "Lv" + JsonManager.playerData.basedata.LvHp.ToString();
         textShopUpAtkGold.text = GameManager.Instance.GetUpAtkPay().ToString();
         textShopUpHpGold.text = GameManager.Instance.GetUpHpPay().ToString();
     }

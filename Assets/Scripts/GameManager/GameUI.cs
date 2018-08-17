@@ -13,6 +13,7 @@ public class GameUI : MonoBehaviour
     public bool isUgui = false;
 	private PlayerController play;
 	private WeaponController weapon;
+    private FlightManager fligh;
 
     public Button btnPause;
     public Button btnRestartAndResume;
@@ -36,9 +37,10 @@ public class GameUI : MonoBehaviour
     public Text textHP;     
 
     public Slider sliderHP;
+    public Image ImaHp;
     public GameObject Toast;
     public Text toastText;
-    public Button BtnAtk;
+    public Image ImaAtk;
     public Button BtnChangeWeapon;
     public Text textAmmoNum;
 
@@ -46,13 +48,16 @@ public class GameUI : MonoBehaviour
     public GameObject planeDeath;
     public GameObject planeGaming;
     public GameObject planePop;
-
+    public GameObject PlaneToast;
+    public GameObject toastKill;
     void Start ()
 	{
 
 		play = (PlayerController)GameObject.FindObjectOfType (typeof(PlayerController));
         weapon = play.GetComponent<WeaponController> ();
-        GameManager.Instance.ClearDate();
+        fligh = (FlightManager)GameObject.FindObjectOfType(typeof(FlightManager));
+        fligh.ClearDate();
+
         // define player
         if (isUgui) ShowUGUI();
 
@@ -91,12 +96,17 @@ public class GameUI : MonoBehaviour
                         //显示战斗UI
                         //ShowUGUI();
                         //更新数据
-                        textKills.text = GameManager.Instance.Killed.ToString();
-                        textScore.text = GameManager.Instance.Score.ToString();
+                        textKills.text = fligh.Killed.ToString();
+                        textScore.text = fligh.Score.ToString();
 
                         float hp = play.GetComponent<DamageManager>().HP / play.GetComponent<DamageManager>().HPmax;
                         sliderHP.value = hp;
                         textHP.text = play.GetComponent<DamageManager>().HP+"/"+ play.GetComponent<DamageManager>().HPmax;
+
+                        if (hp < .2f) {
+                            ImaHp.color = Color.red;
+                            //sliderHP.GetComponentInChildren<Image>().color = Color.red;
+                        }
 
                         UpdateAmmo();
                     }
@@ -163,20 +173,20 @@ public class GameUI : MonoBehaviour
 
     #region DeathUI部分
     /// <summary>
-    /// 显示死亡UI界面
+    /// 显示死亡UI界面 
     /// </summary>
     void ShowDeathUI()
     {
         planeDeath.SetActive(true);
 
-        textGetGold.text = GameManager.Instance.GetGold.ToString();
-        textDeathKills.text = GameManager.Instance.Killed.ToString();
-        textDeathScore.text = GameManager.Instance.Score.ToString();
-        textDefectNum.text = GameManager.Instance.Ranking.ToString();
-        textGoldNum.text = PlayerDate.Instance.Gold.ToString();
+        textGetGold.text = fligh.GetGold.ToString();
+        textDeathKills.text = fligh.Killed.ToString();
+        textDeathScore.text = fligh.Score.ToString();
+        textDefectNum.text = fligh.Ranking.ToString();
+        textGoldNum.text = JsonManager.playerData.basedata.Gold.ToString();
 
-        textWeaponLv.text = PlayerDate.Instance.LvWeapon.ToString();
-        textArmorLv.text = PlayerDate.Instance.LvHp.ToString();
+        textWeaponLv.text = "Lv" + JsonManager.playerData.basedata.LvWeapon.ToString();
+        textArmorLv.text = "Lv" + JsonManager.playerData.basedata.LvHp.ToString();
         textUpHpPay.text = GameManager.Instance.GetUpHpPay().ToString();
         textUpAtkPay.text = GameManager.Instance.GetUpAtkPay().ToString();    
 
@@ -205,6 +215,7 @@ public class GameUI : MonoBehaviour
                 break;
         }
     }
+
     public void OnUpWeaponClick() {
         if (PlayerDate.Instance.LvIsMaxAtk()) {
             ShowLvIsMax();
@@ -248,18 +259,25 @@ public class GameUI : MonoBehaviour
     }
     #endregion
 
-    #region WeaponButton   
+    #region GamingUI
+    public void ToastKill(int Score) {
+        GameObject toast;
+        toast = GameObject.Instantiate(toastKill, PlaneToast.transform.position, Quaternion.Euler(0,0,0), PlaneToast.transform);
+        toast.GetComponent<ToastKill>().SetText("击杀敌人！\n+"+ Score);
+    }
     public void OnChangeWeapon()
     {
         weapon.SwitchWeapon();
         if (weapon.WeaponLists[weapon.CurrentWeapon].Icon)
-            BtnAtk.image.sprite = weapon.WeaponLists[weapon.CurrentWeapon].Icon;
+        {
+            ImaAtk.sprite = weapon.WeaponLists[weapon.CurrentWeapon].Icon;
+        }
 
     }
     public void UpdateAmmo() {
 
         if (weapon.CurrentWeapon == 0) {
-            textAmmoNum.text = "无限";
+            textAmmoNum.text = "∞";
             return;
         }
             
@@ -301,8 +319,8 @@ public class GameUI : MonoBehaviour
 
                         GUI.skin.label.alignment = TextAnchor.UpperLeft;
                         GUI.skin.label.fontSize = 30;
-                        GUI.Label(new Rect(20, 20, 200, 50), "Kills " + GameManager.Instance.Killed.ToString());
-                        GUI.Label(new Rect(20, 60, 200, 50), "Score " + GameManager.Instance.Score.ToString());
+                        GUI.Label(new Rect(20, 20, 200, 50), "Kills " + fligh.Killed.ToString());
+                        GUI.Label(new Rect(20, 60, 200, 50), "Score " + fligh.Score.ToString());
                                                 
                         GUI.skin.label.alignment = TextAnchor.UpperRight;
                         GUI.Label(new Rect(Screen.width - 220, 20, 200, 50), "ARMOR " + play.GetComponent<DamageManager>().HP);
@@ -311,7 +329,7 @@ public class GameUI : MonoBehaviour
                         // Draw Weapon system
                         //if (weapon != null && weapon.WeaponLists.Length > 0 && weapon.WeaponLists.Length < weapon.CurrentWeapon && weapon.WeaponLists [weapon.CurrentWeapon] != null) {
                         if (weapon.WeaponLists[weapon.CurrentWeapon].Icon)
-                            GUI.DrawTexture(new Rect(Screen.width - 200, Screen.height - 200, 160, 160), weapon.WeaponLists[weapon.CurrentWeapon]._Icon);
+                            GUI.DrawTexture(new Rect(Screen.width - 200, Screen.height - 200, 160, 160), weapon.WeaponLists[weapon.CurrentWeapon].TIcon);
 
                         GUI.skin.label.alignment = TextAnchor.UpperRight;
                         if (weapon.WeaponLists[weapon.CurrentWeapon].Ammo <= 0 && weapon.WeaponLists[weapon.CurrentWeapon].ReloadingProcess > 0)
