@@ -10,6 +10,7 @@ public class FlightManager : MonoBehaviour {
     public int Ranking;
 
     private GameUI gameUI;
+
     // Use this for initialization
     void Start () {
         ClearDate();
