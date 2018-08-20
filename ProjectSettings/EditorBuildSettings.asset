@@ -30,8 +30,8 @@ EditorBuildSettings:
     path: Assets/Demo/Sample.unity
     guid: b1ad47c11dad747128811ac9875bfa27
   - enabled: 0
-    path: Assets/Demo/Invasion.unity
-    guid: d3b187015f0814748994664ee33c29a7
-  - enabled: 0
     path: Assets/Demo/Classic.unity
     guid: 1c4c7a166bd57434a8b827a9915b3fcd
+  - enabled: 0
+    path: Assets/Demo/Invasion.unity
+    guid: d3b187015f0814748994664ee33c29a7
